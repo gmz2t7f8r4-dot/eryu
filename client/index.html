@@ -1651,6 +1651,15 @@ onSongChange(() => {
 
 // ── Init ──
 init();
+  setInterval(async () => {
+  try {
+    const d = await api('/music/remote');
+    if (d.ok && d.song && d.song.songId && (!state.song || state.song.songId !== d.song.songId)) {
+      loadAndPlay({ name: d.song.name, artist: d.song.artist, cover: d.song.cover || '', songId: d.song.songId, album: d.song.album });
+    }
+  } catch (e) {}
+}, 5000);
+
 </script>
 </body>
 </html>
