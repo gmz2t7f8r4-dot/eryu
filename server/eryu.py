@@ -191,6 +191,9 @@ class EryuHandler(BaseHTTPRequestHandler):
     # ── Netease helpers ──
 
     def _netease_cookie(self) -> str:
+        env_cookie = os.environ.get("MUSIC_U", "").strip()
+        if env_cookie:
+            return f"MUSIC_U={env_cookie}"
         cred = HERE / ".netease_cred"
         try:
             for line in cred.read_text().splitlines():
